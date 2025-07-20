@@ -1,6 +1,7 @@
 // @ts-check
 import {defineConfig} from "astro/config"
 import starlight from "@astrojs/starlight"
+import starlightThemeRapide from "starlight-theme-rapide"
 import {ExpressiveCodeTheme} from "@astrojs/starlight/expressive-code"
 import fs from "node:fs"
 
@@ -17,8 +18,9 @@ import starlightLllmsTxt from "starlight-llms-txt"
 // https://starlight.astro.build/reference/configuration/
 export default defineConfig({
     outDir: "./dist",
-    site: "https://i582.github.io/",
-    base: "tolk-docs/",
+    site: "https://i582.github.io",
+    base: "/tolk-docs",
+    trailingSlash: "always",
     markdown: {
         remarkPlugins: [remarkHeadingId],
         rehypePlugins: [
@@ -99,6 +101,7 @@ export default defineConfig({
                 "./src/starlight.custom.css",
             ],
             plugins: [
+                starlightThemeRapide(),
                 starlightLinksValidator({
                     errorOnFallbackPages: false,
                     // errorOnInvalidHashes: false,
@@ -130,14 +133,32 @@ export default defineConfig({
             sidebar: [
                 {
                     label: "Book",
-                    items: [{slug: "book/language-guide"}],
+                    items: [
+                        {slug: "book/overview"},
+                        {slug: "book/language-guide"},
+                        {slug: "book/environment-setup"},
+                        {slug: "book/counter-smart-contract"},
+                        {slug: "book/changelog"},
+                    ],
                 },
                 {
-                    label: "⭐ Awesome Tolk →",
+                    label: "Comparison with FunC",
+                    items: [
+                        {slug: "book/tolk-vs-func/in-short"},
+                        {slug: "book/tolk-vs-func/in-detail"},
+                        {slug: "book/tolk-vs-func/stdlib"},
+                        {slug: "book/tolk-vs-func/lazy-loading"},
+                        {slug: "book/tolk-vs-func/create-message"},
+                        {slug: "book/tolk-vs-func/pack-to-from-cells"},
+                        {slug: "book/tolk-vs-func/mutability"},
+                    ],
+                },
+                {
+                    label: "Awesome Tolk",
                     link: "https://github.com/ton-blockchain/awesome-tolk",
                 },
                 {
-                    label: "✈️ Telegram Chat →",
+                    label: "Telegram Chat",
                     link: "https://t.me/tolk_lang",
                     attrs: {target: "_blank"},
                 },

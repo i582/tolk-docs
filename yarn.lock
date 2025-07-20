@@ -2424,7 +2424,7 @@ esast-util-from-js@^2.0.0:
     esast-util-from-estree "^2.0.0"
     vfile-message "^4.0.0"
 
-esbuild@^0.21.3, esbuild@^0.21.5, esbuild@^0.25.0:
+esbuild@^0.21.3, esbuild@^0.21.5, esbuild@^0.25.0, esbuild@^0.25.8:
   version "0.25.8"
   resolved "https://registry.npmjs.org/esbuild/-/esbuild-0.25.8.tgz#482d42198b427c9c2f3a81b63d7663aecb1dda07"
   integrity sha512-vVC0USHGtMi8+R4Kz8rt6JhEWLxsv9Rnu/lGYbPR8u47B+DCBksq9JarW0zOO7bs37hyOK1l2/oqtbciutL5+Q==
@@ -4910,6 +4910,11 @@ starlight-llms-txt@^0.5.0:
     remark-stringify "^11.0.0"
     unified "^11.0.5"
     unist-util-remove "^4.0.0"
+
+starlight-theme-rapide@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.npmjs.org/starlight-theme-rapide/-/starlight-theme-rapide-0.2.1.tgz#382e0534c5d53d95f260901da7a337938a5efb48"
+  integrity sha512-hhoFof2QQk7Z0L2vfDA+x2A13OrziziC6esTmErM2olhoHomwzItstyVrakFkfBtSjKOj9TqThny76UkqIP6xA==
 
 stdin-discarder@^0.2.2:
   version "0.2.2"

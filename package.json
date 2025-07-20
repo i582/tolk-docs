@@ -19,15 +19,17 @@
         "astro": "4.16.18",
         "cspell": "^8.14.4",
         "hast-util-to-string": "^3.0.0",
+        "prettier": "3.4.2",
         "rehype-autolink-headings": "7.1.0",
         "remark": "^15.0.1",
         "remark-custom-heading-id": "2.0.0",
         "sharp": "0.32.6",
         "starlight-links-validator": "^0.12.1",
         "starlight-llms-txt": "^0.5.0",
+        "starlight-theme-rapide": "^0.2.1",
         "typescript": "^5.6.2",
         "unist-util-visit": "^5.0.0",
-        "prettier": "3.4.2"
+        "esbuild": "^0.25.8"
     },
     "resolutions": {
         "esbuild": "^0.25.0"
