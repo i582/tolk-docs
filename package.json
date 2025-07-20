@@ -1,0 +1,60 @@
+{
+    "name": "tolk-docs",
+    "license": "CC-BY-4.0",
+    "version": "0.0.1",
+    "scripts": {
+        "dev": "astro dev",
+        "build": "yarn lint:all && astro check && astro build",
+        "preview": "astro preview",
+        "astro": "astro",
+        "fmt": "prettier --write -l --cache .",
+        "fmt:check": "prettier --check --cache .",
+        "spell": "cspell --no-progress src/content/docs",
+        "lint:all": "yarn fmt:check && yarn spell"
+    },
+    "dependencies": {
+        "@astrojs/check": "0.9.4",
+        "@astrojs/markdown-remark": "5.3.0",
+        "@astrojs/starlight": "0.29.3",
+        "astro": "4.16.18",
+        "cspell": "^8.14.4",
+        "hast-util-to-string": "^3.0.0",
+        "rehype-autolink-headings": "7.1.0",
+        "remark": "^15.0.1",
+        "remark-custom-heading-id": "2.0.0",
+        "sharp": "0.32.6",
+        "starlight-links-validator": "^0.12.1",
+        "starlight-llms-txt": "^0.5.0",
+        "typescript": "^5.6.2",
+        "unist-util-visit": "^5.0.0",
+        "prettier": "3.4.2"
+    },
+    "resolutions": {
+        "esbuild": "^0.25.0"
+    },
+    "overrides": {
+        "esbuild": "^0.25.0"
+    },
+    "packageManager": "yarn@1.22.22",
+    "prettier": {
+        "arrowParens": "avoid",
+        "bracketSpacing": false,
+        "printWidth": 100,
+        "semi": false,
+        "singleQuote": false,
+        "tabWidth": 4,
+        "trailingComma": "all",
+        "useTabs": false,
+        "overrides": [
+            {
+                "files": [
+                    "*.yaml",
+                    "*.yml"
+                ],
+                "options": {
+                    "tabWidth": 2
+                }
+            }
+        ]
+    }
+}
