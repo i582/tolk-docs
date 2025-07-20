@@ -4,7 +4,6 @@ import {EditorState} from "@codemirror/state"
 import {oneDark} from "@codemirror/theme-one-dark"
 import {history} from "@codemirror/commands"
 import {highlightSelectionMatches} from "@codemirror/search"
-import {closeBrackets} from "@codemirror/autocomplete"
 import {
     indentOnInput,
     bracketMatching,
@@ -41,7 +40,6 @@ const PlaygroundEditor: React.FC<PlaygroundEditorProps> = ({code, onChange, isDa
             dropCursor(),
             indentOnInput(),
             bracketMatching(),
-            closeBrackets(),
             highlightActiveLine(),
             highlightSelectionMatches(),
         ]

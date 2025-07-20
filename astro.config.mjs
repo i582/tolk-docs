@@ -19,6 +19,34 @@ export default defineConfig({
     site: "https://i582.github.io",
     base: "/tolk-docs",
     trailingSlash: "always",
+    vite: {
+        define: {
+            global: "globalThis",
+        },
+        optimizeDeps: {
+            include: ["buffer", "@ton/core", "@ton/crypto"],
+            exclude: ["@ton/tolk-js", "@ton/sandbox"],
+        },
+        resolve: {
+            alias: {
+                buffer: "buffer",
+            },
+        },
+        server: {
+            fs: {
+                allow: [".."],
+            },
+        },
+        build: {
+            rollupOptions: {
+                output: {
+                    manualChunks: {
+                        "tolk-runtime": ["@ton/tolk-js", "@ton/sandbox"],
+                    },
+                },
+            },
+        },
+    },
     markdown: {
         remarkPlugins: [remarkHeadingId],
         rehypePlugins: [
@@ -114,7 +142,7 @@ export default defineConfig({
             //
             // To use fallback content and translation notices provided by Starlight,
             // files across language folders must be named the same!
-            defaultLocale: "root", // removes language prefix from English pages
+            defaultLocale: "root",
             locales: {
                 root: {
                     label: "English",

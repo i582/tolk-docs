@@ -99,7 +99,6 @@ function tokenBase(stream: any, state: any) {
     }
 
     if (/[a-zA-Z_$]/.test(ch)) {
-        // Обработка backtick идентификаторов
         if (ch === "`") {
             stream.next()
             while (stream.peek() && stream.peek() !== "`") {
@@ -115,7 +114,7 @@ function tokenBase(stream: any, state: any) {
         if (tolkKeywords.has(word)) return "keyword"
         if (tolkBuiltins.has(word)) return "atom"
         if (tolkTypes.has(word)) return "type"
-        if (/^[A-Z]/.test(word)) return "type" // Типы с заглавной буквы
+        if (/^[A-Z]/.test(word)) return "type"
 
         return "variable"
     }

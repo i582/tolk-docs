@@ -11,26 +11,15 @@ interface InlinePlaygroundComponentProps {
     readonly code?: string
 }
 
+const DEFAULT_CODE = `fun add(a: int, b: int) { return a + b }
+
+fun main(): int {
+    return add(12, 25);
+}`
+
 const InlinePlaygroundComponent: React.FC<InlinePlaygroundComponentProps> = ({
     children,
-    initialCode = `import "utils"
-
-struct Storage {
-    counter: int32
-}
-
-fun Storage.load() {
-    return Storage.fromCell(contract.getData());
-}
-
-fun onInternalMessage(in: InMessage) {
-    // ...
-}
-
-get fun currentCounter(): int {
-    val storage = lazy Storage.load();
-    return storage.counter;
-}`,
+    initialCode = DEFAULT_CODE,
     code: codeProp,
 }) => {
     const getInitialCode = () => {
@@ -93,33 +82,75 @@ get fun currentCounter(): int {
         if (bundleLoaded) return
 
         setIsBundleLoading(true)
-        await new Promise(resolve => setTimeout(resolve, 1000))
-        setBundleLoaded(true)
-        setIsBundleLoading(false)
+        setTerminalOutput("Loading Tolk runtime...\n")
+
+        try {
+            // Динамически загружаем runtime модуль
+            await import("./playground-runtime")
+            setBundleLoaded(true)
+            setTerminalOutput(prev => prev + "Runtime loaded successfully!\n")
+        } catch (error) {
+            console.error("Failed to load runtime:", error)
+            setTerminalOutput(prev => prev + `Failed to load runtime: ${error}\n`)
+            setTerminalOutput(prev => prev + "Note: Runtime loading works in production build.\n")
+            throw error
+        } finally {
+            setIsBundleLoading(false)
+        }
     }
 
     const runCode = async () => {
         if (!bundleLoaded) {
-            await loadBundle()
+            setIsTerminalOpen(true)
+            try {
+                await loadBundle()
+            } catch (error) {
+                setIsLoading(false)
+                return
+            }
         }
 
         setIsLoading(true)
         setIsTerminalOpen(true)
-        setTerminalOutput("Starting compilation...\n")
+        setTerminalOutput("")
 
-        await new Promise(resolve => setTimeout(resolve, 800))
-        setTerminalOutput(prev => prev + "Compiling Tolk code...\n")
+        try {
+            // Динамически импортируем и выполняем
+            const {compileAndExecuteTolk} = await import("./playground-runtime")
 
-        await new Promise(resolve => setTimeout(resolve, 600))
-        setTerminalOutput(prev => prev + "Code compiled successfully!\n")
+            setTerminalOutput(prev => prev + "Starting compilation...\n")
 
-        await new Promise(resolve => setTimeout(resolve, 400))
-        setTerminalOutput(prev => prev + "Executing...\n")
-        setTerminalOutput(prev => prev + "Hello from Tolk!\n")
-        setTerminalOutput(prev => prev + "Number is: 42\n")
-        setTerminalOutput(prev => prev + "Execution completed.\n")
+            const result = await compileAndExecuteTolk(code)
 
-        setIsLoading(false)
+            if (result.compilation.success) {
+                setTerminalOutput(prev => prev + `✓ ${result.compilation.output}\n`)
+
+                if (result.execution) {
+                    setTerminalOutput(prev => prev + "Executing...\n")
+
+                    if (result.execution.success) {
+                        setTerminalOutput(prev => prev + `✓ ${result.execution?.output}\n`)
+                    } else {
+                        setTerminalOutput(
+                            prev =>
+                                prev +
+                                `✗ Execution failed: ${result.execution?.error ?? "Unknown error"}\n`,
+                        )
+                    }
+                }
+            } else {
+                setTerminalOutput(
+                    prev => prev + `✗ Compilation failed: ${result.compilation.error}\n`,
+                )
+            }
+
+            setTerminalOutput(prev => prev + "\nExecution completed.\n")
+        } catch (error) {
+            console.error("Runtime error:", error)
+            setTerminalOutput(prev => prev + `✗ Runtime error: ${error}\n`)
+        } finally {
+            setIsLoading(false)
+        }
     }
 
     return (
