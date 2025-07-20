@@ -377,7 +377,7 @@ As a consequence, partial reassignment is not allowed:
 ```tolk
 var a = 10;
 ...
-var (a, b) = (20, 30);  // error, releclaration of a
+var (a, b) = (20, 30);  // error, redeclaration of a
 ```
 
 Note, that it's not a problem for `loadUint()` and other methods. In FunC, they returned a modified object, so a pattern `var (cs, int value) = cs.load_int(32)` was quite common. In Tolk, such methods mutate an object: `var value = cs.loadInt(32)`, so redeclaration is unlikely to be needed.
@@ -386,7 +386,7 @@ Note, that it's not a problem for `loadUint()` and other methods. In FunC, they 
 fun send(msg: cell) {
     var msg = ...;  // error, redeclaration of msg
 
-    // solution 1: intruduce a new variable
+    // solution 1: introduce a new variable
     var msgWrapped = ...;
     // solution 2: use `redef`, though not recommended
     var msg redef = ...;
@@ -696,7 +696,7 @@ var last: int = tupleLast(t);       // ok, T=int
 var last = tupleLast<int>(t);       // ok, T=int
 var last = tupleLast(t) as int;     // ok, T=int
 
-someF(tupleLast(t));       // ok, T=(paremeter's declared type)
+someF(tupleLast(t));       // ok, T=(parameter's declared type)
 return tupleLast(t);       // ok if function specifies return type
 ```
 

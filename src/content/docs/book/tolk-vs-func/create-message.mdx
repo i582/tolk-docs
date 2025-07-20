@@ -246,7 +246,7 @@ Hence, when you pass `body: RequestedInfo {...}`, then `TBody = RequestedInfo`, 
 **Even if body is large/unpredictable, you can force it to be inlined** by wrapping into a special type:
 
 ```tolk
-// potentialy 620 bits (if all coins are billions of billions)
+// potentially 620 bits (if all coins are billions of billions)
 // by default, compiler will make a ref
 struct ProbablyLarge {
     a: (coins, coins, coins, coins, coins)
