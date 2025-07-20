@@ -17,7 +17,7 @@ import starlightLllmsTxt from "starlight-llms-txt"
 // https://starlight.astro.build/reference/configuration/
 export default defineConfig({
     outDir: "./dist",
-    site: "https://docs.tolk-lang.org",
+    site: "https://i582.github.io/tolk-docs/",
     markdown: {
         remarkPlugins: [remarkHeadingId],
         rehypePlugins: [
