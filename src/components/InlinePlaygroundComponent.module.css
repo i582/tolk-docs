@@ -1,0 +1,252 @@
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes blink {
+    50% {
+        opacity: 0;
+    }
+}
+
+.playground {
+    position: relative;
+    margin: 1.5rem 0;
+    border-radius: 12px;
+    background-color: var(--sl-color-gray-6);
+    border: 1px solid var(--sl-color-gray-5);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.playgroundLight {
+    background-color: #f8f8f8;
+    border: 1px solid #e5e5e5;
+}
+
+.playgroundDark {
+    background-color: #1e1e1e;
+    border-color: #333;
+}
+
+.editor {
+    position: relative;
+    flex-grow: 1;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    min-height: 48px;
+}
+
+.editor > div {
+    margin-top: 0;
+}
+
+.runButton {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    z-index: 10;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 6px;
+    transition: background-color 0.2s;
+    line-height: 0;
+}
+
+.runButton:hover {
+    background-color: rgba(34, 197, 94, 0.1);
+}
+
+.runButton:disabled .loadingIcon {
+    animation: spin 1s linear infinite;
+}
+
+.runButton:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.copyButton {
+    position: absolute;
+    bottom: 0.75rem;
+    right: 0.75rem;
+    z-index: 10;
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--sl-color-gray-3);
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 6px;
+    transition: all 0.2s;
+    line-height: 0;
+}
+
+.copyButton:hover {
+    color: var(--sl-color-text);
+    background-color: var(--sl-color-gray-5);
+}
+
+.playgroundLight .copyButton {
+    color: #9e9e9e;
+}
+
+.playgroundLight .copyButton:hover {
+    color: #212121;
+    background-color: #f0f0f0;
+}
+
+.copyButtonSuccess {
+    border-color: #22c55e !important;
+    color: #22c55e !important;
+    background-color: rgba(34, 197, 94, 0.1) !important;
+}
+
+.copyButtonSuccess:hover {
+    background-color: rgba(34, 197, 94, 0.2) !important;
+}
+
+.playgroundDark .copyButton {
+    background-color: rgba(45, 45, 45, 0.8);
+    color: #9ca3af;
+}
+
+.playgroundDark .copyButton:hover {
+    background-color: rgba(45, 45, 45, 0.95);
+    color: #d1d5db;
+}
+
+.loadingIcon {
+    animation: spin 1s linear infinite;
+}
+
+.terminal {
+    border-top: 1px solid var(--sl-color-gray-5);
+    animation: slideDown 0.3s ease;
+}
+
+.playgroundLight .terminal {
+    border-top: 1px solid #e5e5e5;
+}
+
+.terminalLight {
+    background-color: #f8f9fa;
+    border-top-color: #e1e5e9;
+}
+
+.terminalDark {
+    background-color: #1a1a1a;
+    border-top-color: #333;
+}
+
+.terminalHeader {
+    padding: 0.5rem 1rem;
+    background-color: var(--sl-color-gray-5);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.75rem;
+    color: var(--sl-color-gray-2);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.playgroundLight .terminalHeader {
+    background-color: #f0f0f0;
+    color: #616161;
+}
+
+.terminalHeaderLight {
+    background-color: #f1f3f4;
+    border-bottom-color: #e1e5e9;
+    color: #5f6368;
+}
+
+.terminalHeaderDark {
+    background-color: #2d2d2d;
+    border-bottom-color: #333;
+    color: #aaa;
+}
+
+.terminalLabel {
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.closeButton {
+    background: transparent;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    padding: 0.25rem;
+}
+
+.closeButton:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.terminalContent {
+    padding: 1rem;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.875rem;
+    background-color: var(--sl-color-gray-7);
+    color: #e0e0e0;
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+.playgroundLight .terminalContent {
+    background-color: #fafafa;
+    color: #424242;
+}
+
+.terminalContentLight {
+    background-color: #f8f9fa;
+    color: #22c55e;
+}
+
+.terminalContentDark {
+    background-color: #1a1a1a;
+    color: #00ff88;
+}
+
+.terminalPre {
+    margin: 0;
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+.cursor {
+    display: inline-block;
+    background-color: var(--sl-color-gray-2);
+    width: 8px;
+    height: 1em;
+    animation: blink 1s steps(1) infinite;
+}
+
+.playgroundLight .cursor {
+    background-color: #616161;
+}
+
+:global(.cm-editor.cm-focused) {
+    outline: none;
+}
+
+:global(.cm-editor .cm-scroller) {
+    padding: 0;
+    margin: 0;
+}

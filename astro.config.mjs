@@ -10,9 +10,7 @@ import remarkHeadingId from "remark-custom-heading-id"
 import {rehypeHeadingIds} from "@astrojs/markdown-remark"
 import rehypeAutolinkHeadings from "rehype-autolink-headings"
 
-import starlightLinksValidator from "starlight-links-validator"
-
-import starlightLllmsTxt from "starlight-llms-txt"
+import react from "@astrojs/react"
 
 // https://astro.build/config
 // https://starlight.astro.build/reference/configuration/
@@ -107,14 +105,6 @@ export default defineConfig({
                 //     errorOnFallbackPages: false,
                 //     // errorOnInvalidHashes: false,
                 // }),
-                starlightLllmsTxt({
-                    description:
-                        "Tolk is a next-gen programming language for TON Blockchain focused on efficiency and simplicity. It is designed to be easy to learn and use, and to be a good fit for smart contracts.",
-                    pageSeparator: "\n\n---\n\n",
-                    minify: {
-                        note: false,
-                    },
-                }),
             ],
             credits: false,
             lastUpdated: true,
@@ -165,6 +155,7 @@ export default defineConfig({
                 },
             ],
         }),
+        react(),
     ],
     redirects: {},
 })
