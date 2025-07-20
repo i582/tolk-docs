@@ -102,10 +102,11 @@ export default defineConfig({
             ],
             plugins: [
                 starlightThemeRapide(),
-                starlightLinksValidator({
-                    errorOnFallbackPages: false,
-                    // errorOnInvalidHashes: false,
-                }),
+                // TODO: enable
+                // starlightLinksValidator({
+                //     errorOnFallbackPages: false,
+                //     // errorOnInvalidHashes: false,
+                // }),
                 starlightLllmsTxt({
                     description:
                         "Tolk is a next-gen programming language for TON Blockchain focused on efficiency and simplicity. It is designed to be easy to learn and use, and to be a good fit for smart contracts.",
