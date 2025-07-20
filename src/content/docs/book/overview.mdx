@@ -6,7 +6,19 @@ sidebar:
 
 import InlinePlaygroundComponent from "../../../components/InlinePlaygroundComponent.tsx"
 
-<InlinePlaygroundComponent client:load />
+<InlinePlaygroundComponent client:load>
+    {`fun add(a: int, b: int) {return a + b}
+fun main(): int {
+    return add(12, 25);
+}`}
+</InlinePlaygroundComponent>
+
+<InlinePlaygroundComponent client:load>
+    {`// other code
+fun main(): int {
+    return 10 - 20;
+}`}
+</InlinePlaygroundComponent>
 
 **Tolk** is a next-generation language for smart contracts in TON.
 It replaces FunC with modern syntax, strong types, and built-in serialization — while generating even more efficient assembler code.

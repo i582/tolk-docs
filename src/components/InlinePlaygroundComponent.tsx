@@ -29,9 +29,10 @@ const InlinePlaygroundComponent: React.FC<InlinePlaygroundComponentProps> = ({
             React.isValidElement(children) &&
             typeof children.props === "object" &&
             children.props !== null &&
-            "children" in children.props
+            "value" in children.props &&
+            typeof children.props.value === "string"
         ) {
-            return (children.props as any).children || initialCode
+            return children.props.value ?? initialCode
         }
         return initialCode
     }

@@ -9,7 +9,7 @@ export const compileTolkCode = async (code: string): Promise<Cell | undefined> =
         withSrcLineComments: true,
     })
     if (result.status === "error") {
-        return undefined
+        throw new Error(result.message)
     }
     return Cell.fromBase64(result.codeBoc64)
 }
