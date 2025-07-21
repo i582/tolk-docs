@@ -1,9 +1,9 @@
 import React from "react"
 
 interface CheckIconProps {
-    size?: number
-    color?: string
-    className?: string
+    readonly size?: number
+    readonly color?: string
+    readonly className?: string
 }
 
 const CheckIcon: React.FC<CheckIconProps> = ({size = 16, color = "currentColor", className}) => {

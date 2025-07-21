@@ -1,8 +1,9 @@
 import "./polyfills"
 
+import type {Cell, TupleItem, TupleReader} from "@ton/core"
+
 import {compileTolkCode} from "./compile-tolk"
 import {executeCell} from "./execute"
-import type {Cell, TupleItem, TupleReader} from "@ton/core"
 
 export interface CompilationResult {
     readonly success: boolean
@@ -73,25 +74,25 @@ async function stepExecuteCode(codeCell: Cell, compilationResult: CompilationRes
     }
 }
 
-export type Stack = StackElement[]
+export type Stack = readonly StackElement[]
 
 export type StackElement =
-    | {$: "Null"}
-    | {$: "Integer"; value: bigint}
-    | {$: "Cell"; boc: string}
+    | {readonly $: "Null"}
+    | {readonly $: "Integer"; readonly value: bigint}
+    | {readonly $: "Cell"; readonly boc: string}
     | {
-          $: "Slice"
-          hex: string
-          startBit: number
-          endBit: number
-          startRef: number
-          endRef: number
+          readonly $: "Slice"
+          readonly hex: string
+          readonly startBit: number
+          readonly endBit: number
+          readonly startRef: number
+          readonly endRef: number
       }
-    | {$: "Builder"; hex: string}
-    | {$: "Continuation"; name: string}
-    | {$: "Address"; value: string}
-    | {$: "Tuple"; elements: StackElement[]}
-    | {$: "Unknown"; value: string}
+    | {readonly $: "Builder"; readonly hex: string}
+    | {readonly $: "Continuation"; readonly name: string}
+    | {readonly $: "Address"; readonly value: string}
+    | {readonly $: "Tuple"; readonly elements: readonly StackElement[]}
+    | {readonly $: "Unknown"; readonly value: string}
 
 export const itemToStackElement = (el: TupleItem): StackElement => {
     if (el.type === "int") {

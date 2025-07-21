@@ -1,4 +1,5 @@
 import React from "react"
+
 import PlayIcon from "./icons/PlayIcon"
 import LoadingIcon from "./icons/LoadingIcon"
 import styles from "./InlinePlaygroundComponent.module.css"

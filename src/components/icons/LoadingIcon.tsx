@@ -1,9 +1,9 @@
 import React from "react"
 
 interface LoadingIconProps {
-    size?: number
-    color?: string
-    className?: string
+    readonly size?: number
+    readonly color?: string
+    readonly className?: string
 }
 
 const LoadingIcon: React.FC<LoadingIconProps> = ({

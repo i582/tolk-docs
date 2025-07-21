@@ -1,8 +1,8 @@
 import React from "react"
 
 interface CopyIconProps {
-    size?: number
-    className?: string
+    readonly size?: number
+    readonly className?: string
 }
 
 const CopyIcon: React.FC<CopyIconProps> = ({size = 16, className}) => {

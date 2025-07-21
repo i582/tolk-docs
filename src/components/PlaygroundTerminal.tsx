@@ -1,4 +1,5 @@
 import React from "react"
+
 import styles from "./InlinePlaygroundComponent.module.css"
 
 interface PlaygroundTerminalProps {

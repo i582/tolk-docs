@@ -1,4 +1,4 @@
-import {LanguageSupport} from "@codemirror/language"
+import {LanguageSupport, StringStream} from "@codemirror/language"
 import {StreamLanguage} from "@codemirror/language"
 
 const tolkKeywords = new Set([
@@ -48,13 +48,19 @@ const tolkTypes = new Set([
     "address",
 ])
 
+// eslint-disable-next-line functional/type-declaration-immutability
+interface LexerState {
+    tokenize: (stream: StringStream, state: this) => string | null
+    context: string | null
+}
+
 const tolkLanguage = StreamLanguage.define({
     name: "tolk",
     startState() {
         return {
             tokenize: tokenBase,
             context: null,
-        }
+        } satisfies LexerState
     },
     token(stream, state) {
         return state.tokenize(stream, state)
@@ -66,10 +72,11 @@ const tolkLanguage = StreamLanguage.define({
     },
 })
 
-function tokenBase(stream: any, state: any) {
+function tokenBase(stream: StringStream, state: LexerState) {
     if (stream.eatSpace()) return null
 
     const ch = stream.peek()
+    if (ch === null || ch === undefined) return null
 
     if (ch === "/") {
         if (stream.match("//")) {
@@ -127,12 +134,12 @@ function tokenBase(stream: any, state: any) {
         return "operator"
     }
 
-    if (/[+\-*\/%&|^<>=!~?]/.test(ch)) {
+    if (/[+\-*/%&|^<>=!~?]/.test(ch)) {
         stream.next()
         return "operator"
     }
 
-    if (/[();,.\[\]{}:]/.test(ch)) {
+    if (/[();,.[]{}:]/.test(ch)) {
         stream.next()
         return null
     }
@@ -141,7 +148,7 @@ function tokenBase(stream: any, state: any) {
     return null
 }
 
-function tokenComment(stream: any, state: any) {
+function tokenComment(stream: StringStream, state: LexerState) {
     let maybeEnd = false
     while (stream.peek()) {
         if (maybeEnd && stream.peek() === "/") {
@@ -155,7 +162,7 @@ function tokenComment(stream: any, state: any) {
     return "comment"
 }
 
-function tokenString(stream: any, state: any) {
+function tokenString(stream: StringStream, state: LexerState) {
     let escaped = false
     while (stream.peek()) {
         if (!escaped && stream.peek() === '"') {
@@ -169,7 +176,7 @@ function tokenString(stream: any, state: any) {
     return "string"
 }
 
-function tokenTripleString(stream: any, state: any) {
+function tokenTripleString(stream: StringStream, state: LexerState) {
     while (stream.peek()) {
         if (stream.match('"""')) {
             state.tokenize = tokenBase

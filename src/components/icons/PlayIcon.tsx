@@ -1,9 +1,9 @@
 import React from "react"
 
 interface PlayIconProps {
-    size?: number
-    color?: string
-    className?: string
+    readonly size?: number
+    readonly color?: string
+    readonly className?: string
 }
 
 const PlayIcon: React.FC<PlayIconProps> = ({size = 16, color = "currentColor", className}) => {

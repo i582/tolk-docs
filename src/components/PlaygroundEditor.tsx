@@ -16,6 +16,7 @@ import {
     dropCursor,
     highlightActiveLine,
 } from "@codemirror/view"
+
 import {tolk} from "./lang-tolk"
 
 interface PlaygroundEditorProps {
@@ -65,7 +66,7 @@ const PlaygroundEditor: React.FC<PlaygroundEditorProps> = ({code, onChange, them
         return () => {
             view.destroy()
         }
-    }, [theme])
+    }, [code, onChange, theme])
 
     useEffect(() => {
         if (viewRef.current && viewRef.current.state.doc.toString() !== code) {

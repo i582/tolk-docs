@@ -1,10 +1,11 @@
 import React, {useState} from "react"
+
 import PlaygroundEditor from "./PlaygroundEditor"
 import PlaygroundRunButton from "./PlaygroundRunButton"
 import PlaygroundCopyButton from "./PlaygroundCopyButton"
 import PlaygroundTerminal from "./PlaygroundTerminal"
-import styles from "./InlinePlaygroundComponent.module.css"
 import {useStarlightTheme} from "./useStarlightTheme.tsx"
+import styles from "./InlinePlaygroundComponent.module.css"
 
 interface InlinePlaygroundComponentProps {
     readonly children?: React.ReactNode
@@ -53,12 +54,12 @@ const InlinePlaygroundComponent: React.FC<InlinePlaygroundComponentProps> = ({
         setTerminalOutput("Loading Tolk runtime...\n")
 
         try {
-            // Динамически загружаем runtime модуль
             await import("./playground-runtime")
             setBundleLoaded(true)
             setTerminalOutput(prev => prev + "Runtime loaded successfully!\n")
         } catch (error) {
             console.error("Failed to load runtime:", error)
+            // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
             setTerminalOutput(prev => prev + `Failed to load runtime: ${error}\n`)
             setTerminalOutput(prev => prev + "Note: Runtime loading works in production build.\n")
             throw error
@@ -73,6 +74,7 @@ const InlinePlaygroundComponent: React.FC<InlinePlaygroundComponentProps> = ({
             try {
                 await loadBundle()
             } catch (error) {
+                console.error("Failed to load runtime:", error)
                 setIsLoading(false)
                 return
             }
@@ -106,7 +108,11 @@ const InlinePlaygroundComponent: React.FC<InlinePlaygroundComponentProps> = ({
             }
         } catch (error) {
             console.error("Runtime error:", error)
-            setTerminalOutput(prev => prev + `✗ Runtime error: ${error}\n`)
+            setTerminalOutput(
+                prev =>
+                    prev +
+                    `✗ Runtime error: ${error instanceof Error ? error.message : "Unknown error"}\n`,
+            )
         } finally {
             setIsLoading(false)
         }
@@ -118,7 +124,10 @@ const InlinePlaygroundComponent: React.FC<InlinePlaygroundComponentProps> = ({
         >
             <PlaygroundEditor code={code} onChange={setCode} theme={theme} />
 
-            <PlaygroundRunButton onClick={runCode} disabled={isLoading || isBundleLoading} />
+            <PlaygroundRunButton
+                onClick={() => void runCode()}
+                disabled={isLoading || isBundleLoading}
+            />
 
             <PlaygroundCopyButton code={code} />
 
