@@ -66,7 +66,8 @@ const PlaygroundEditor: React.FC<PlaygroundEditorProps> = ({code, onChange, them
     return () => {
       view.destroy()
     }
-  }, [code, onChange, theme])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [theme])
 
   useEffect(() => {
     if (viewRef.current && viewRef.current.state.doc.toString() !== code) {
