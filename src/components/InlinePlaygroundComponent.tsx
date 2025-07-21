@@ -119,7 +119,11 @@ const InlinePlaygroundComponent: React.FC<InlinePlaygroundComponentProps> = ({
     >
       <PlaygroundEditor code={code} onChange={setCode} theme={theme} />
 
-      <PlaygroundRunButton onClick={() => void runCode()} disabled={isLoading || isBundleLoading} />
+      <PlaygroundRunButton
+        onClick={() => void runCode()}
+        disabled={isLoading || isBundleLoading}
+        theme={theme}
+      />
 
       <PlaygroundCopyButton code={code} />
 

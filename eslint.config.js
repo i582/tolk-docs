@@ -12,7 +12,7 @@ import functional from "eslint-plugin-functional"
 
 export default tseslint.config(
   {
-    ignores: ["dist", "src/components/polyfills.ts", "src/env.d.ts", ".test-project/"],
+    ignores: ["dist", "src/components/polyfills.ts", "src/env.d.ts", ".test-project/", ".astro/"],
   },
   {
     extends: [js.configs.recommended, ...tseslint.configs.recommendedTypeChecked],
