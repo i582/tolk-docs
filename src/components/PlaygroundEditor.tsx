@@ -33,7 +33,7 @@ const PlaygroundEditor: React.FC<PlaygroundEditorProps> = ({code, onChange, them
         if (!editorRef.current) return
 
         const basicExtensions = [
-            lineNumbers(),
+            // lineNumbers(),
             highlightActiveLineGutter(),
             history(),
             drawSelection(),
@@ -56,22 +56,6 @@ const PlaygroundEditor: React.FC<PlaygroundEditorProps> = ({code, onChange, them
                         if (update.docChanged) {
                             onChange(update.state.doc.toString())
                         }
-                    }),
-                    EditorView.theme({
-                        "&": {
-                            fontSize: "14px",
-                            fontFamily:
-                                "'JetBrains Mono', 'Fira Code', 'Menlo', 'Consolas', 'DejaVu Sans Mono', monospace",
-                        },
-                        ".cm-focused": {
-                            outline: "none",
-                        },
-                        ".cm-line": {
-                            marginTop: "0",
-                        },
-                        ".cm-gutterElement": {
-                            marginTop: "0",
-                        },
                     }),
                 ],
             }),

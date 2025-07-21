@@ -14,7 +14,7 @@ const PlaygroundRunButton: React.FC<PlaygroundRunButtonProps> = ({onClick, disab
             {disabled ? (
                 <LoadingIcon size={18} className={styles.loadingIcon} />
             ) : (
-                <PlayIcon size={18} color="#22c55e" />
+                <PlayIcon size={18} color="rgb(22 109 54 / 65%" />
             )}
         </button>
     )
