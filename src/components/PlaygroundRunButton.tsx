@@ -5,17 +5,10 @@ import styles from "./InlinePlaygroundComponent.module.css"
 
 interface PlaygroundRunButtonProps {
     readonly onClick: () => void
-    readonly isLoading: boolean
-    readonly isBundleLoading: boolean
+    readonly disabled: boolean
 }
 
-const PlaygroundRunButton: React.FC<PlaygroundRunButtonProps> = ({
-    onClick,
-    isLoading,
-    isBundleLoading,
-}) => {
-    const disabled = isLoading || isBundleLoading
-
+const PlaygroundRunButton: React.FC<PlaygroundRunButtonProps> = ({onClick, disabled}) => {
     return (
         <button className={styles.runButton} onClick={onClick} disabled={disabled} title="Run code">
             {disabled ? (

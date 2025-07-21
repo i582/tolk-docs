@@ -22,10 +22,10 @@ import {tolk} from "./lang-tolk"
 interface PlaygroundEditorProps {
     readonly code: string
     readonly onChange: (code: string) => void
-    readonly isDarkTheme: boolean
+    readonly theme: "dark" | "light" | "auto"
 }
 
-const PlaygroundEditor: React.FC<PlaygroundEditorProps> = ({code, onChange, isDarkTheme}) => {
+const PlaygroundEditor: React.FC<PlaygroundEditorProps> = ({code, onChange, theme}) => {
     const editorRef = useRef<HTMLDivElement>(null)
     const viewRef = useRef<EditorView | null>(null)
 
@@ -51,7 +51,7 @@ const PlaygroundEditor: React.FC<PlaygroundEditorProps> = ({code, onChange, isDa
                     ...basicExtensions,
                     tolk(),
                     syntaxHighlighting(defaultHighlightStyle, {fallback: true}),
-                    isDarkTheme ? oneDark : [],
+                    theme === "dark" ? oneDark : [],
                     EditorView.updateListener.of(update => {
                         if (update.docChanged) {
                             onChange(update.state.doc.toString())
@@ -83,7 +83,7 @@ const PlaygroundEditor: React.FC<PlaygroundEditorProps> = ({code, onChange, isDa
         return () => {
             view.destroy()
         }
-    }, [isDarkTheme])
+    }, [theme])
 
     useEffect(() => {
         if (viewRef.current && viewRef.current.state.doc.toString() !== code) {

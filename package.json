@@ -19,7 +19,6 @@
         "@astrojs/markdown-remark": "5.3.0",
         "@astrojs/react": "^4.3.0",
         "@astrojs/starlight": "0.29.3",
-        "@codemirror/basic-setup": "^0.20.0",
         "@codemirror/commands": "^6.8.1",
         "@codemirror/history": "^0.19.2",
         "@codemirror/language": "^6.11.2",

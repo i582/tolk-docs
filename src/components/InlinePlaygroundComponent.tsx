@@ -1,9 +1,10 @@
-import React, {useState, useEffect} from "react"
+import React, {useState} from "react"
 import PlaygroundEditor from "./PlaygroundEditor"
 import PlaygroundRunButton from "./PlaygroundRunButton"
 import PlaygroundCopyButton from "./PlaygroundCopyButton"
 import PlaygroundTerminal from "./PlaygroundTerminal"
 import styles from "./InlinePlaygroundComponent.module.css"
+import {useStarlightTheme} from "./useStarlightTheme.tsx"
 
 interface InlinePlaygroundComponentProps {
     readonly children?: React.ReactNode
@@ -22,6 +23,7 @@ const InlinePlaygroundComponent: React.FC<InlinePlaygroundComponentProps> = ({
     initialCode = DEFAULT_CODE,
     code: codeProp,
 }) => {
+    const theme = useStarlightTheme()
     const getInitialCode = () => {
         if (codeProp) return codeProp
         if (typeof children === "string") return children
@@ -43,41 +45,6 @@ const InlinePlaygroundComponent: React.FC<InlinePlaygroundComponentProps> = ({
     const [isBundleLoading, setIsBundleLoading] = useState(false)
     const [bundleLoaded, setBundleLoaded] = useState(false)
     const [terminalOutput, setTerminalOutput] = useState("")
-    const [copied, setCopied] = useState(false)
-    const [isDarkTheme, setIsDarkTheme] = useState(true)
-
-    useEffect(() => {
-        const checkTheme = () => {
-            const computedStyle = getComputedStyle(document.documentElement)
-            const bgColor = computedStyle.getPropertyValue("--sl-color-bg").trim()
-            const textColor = computedStyle.getPropertyValue("--sl-color-text").trim()
-            const isDark =
-                bgColor.includes("dark") ||
-                bgColor.includes("#") ||
-                textColor.includes("white") ||
-                textColor.includes("#fff")
-            setIsDarkTheme(isDark)
-        }
-
-        checkTheme()
-        const observer = new MutationObserver(checkTheme)
-        observer.observe(document.documentElement, {
-            attributes: true,
-            attributeFilter: ["data-theme", "class"],
-        })
-
-        return () => observer.disconnect()
-    }, [])
-
-    const copyToClipboard = async () => {
-        try {
-            await navigator.clipboard.writeText(code)
-            setCopied(true)
-            setTimeout(() => setCopied(false), 2000)
-        } catch (err) {
-            console.error("Failed to copy:", err)
-        }
-    }
 
     const loadBundle = async () => {
         if (bundleLoaded) return
@@ -156,24 +123,20 @@ const InlinePlaygroundComponent: React.FC<InlinePlaygroundComponentProps> = ({
 
     return (
         <div
-            className={`not-content ${styles.playground} ${isDarkTheme ? styles.playgroundDark : styles.playgroundLight}`}
+            className={`not-content ${styles.playground} ${theme === "dark" ? styles.playgroundDark : styles.playgroundLight}`}
         >
-            <PlaygroundEditor code={code} onChange={setCode} isDarkTheme={isDarkTheme} />
+            <PlaygroundEditor code={code} onChange={setCode} theme={theme} />
 
-            <PlaygroundRunButton
-                onClick={runCode}
-                isLoading={isLoading}
-                isBundleLoading={isBundleLoading}
-            />
+            <PlaygroundRunButton onClick={runCode} disabled={isLoading || isBundleLoading} />
 
-            <PlaygroundCopyButton onClick={copyToClipboard} copied={copied} />
+            <PlaygroundCopyButton code={code} />
 
             <PlaygroundTerminal
                 isOpen={isTerminalOpen}
                 onClose={() => setIsTerminalOpen(false)}
                 output={terminalOutput}
                 isLoading={isLoading}
-                isDarkTheme={isDarkTheme}
+                isDarkTheme={theme === "dark"}
             />
         </div>
     )
