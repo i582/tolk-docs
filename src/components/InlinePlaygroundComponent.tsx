@@ -83,36 +83,27 @@ const InlinePlaygroundComponent: React.FC<InlinePlaygroundComponentProps> = ({
         setTerminalOutput("")
 
         try {
-            // Динамически импортируем и выполняем
             const {compileAndExecuteTolk} = await import("./playground-runtime")
 
-            setTerminalOutput(prev => prev + "Starting compilation...\n")
+            setTerminalOutput("Starting compilation...")
 
             const result = await compileAndExecuteTolk(code)
 
-            if (result.compilation.success) {
-                setTerminalOutput(prev => prev + `✓ ${result.compilation.output}\n`)
-
-                if (result.execution) {
-                    setTerminalOutput(prev => prev + "Executing...\n")
-
-                    if (result.execution.success) {
-                        setTerminalOutput(prev => prev + `✓ ${result.execution?.output}\n`)
-                    } else {
-                        setTerminalOutput(
-                            prev =>
-                                prev +
-                                `✗ Execution failed: ${result.execution?.error ?? "Unknown error"}\n`,
-                        )
-                    }
+            if (result.compilation.success && result.execution) {
+                if (result.execution.success) {
+                    setTerminalOutput(`${result.execution?.output}\n`)
+                } else {
+                    setTerminalOutput(
+                        prev =>
+                            prev +
+                            `✗ Execution failed: ${result.execution?.error ?? "Unknown error"}\n`,
+                    )
                 }
             } else {
                 setTerminalOutput(
                     prev => prev + `✗ Compilation failed: ${result.compilation.error}\n`,
                 )
             }
-
-            setTerminalOutput(prev => prev + "\nExecution completed.\n")
         } catch (error) {
             console.error("Runtime error:", error)
             setTerminalOutput(prev => prev + `✗ Runtime error: ${error}\n`)

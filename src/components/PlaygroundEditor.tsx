@@ -11,7 +11,6 @@ import {
     defaultHighlightStyle,
 } from "@codemirror/language"
 import {
-    lineNumbers,
     highlightActiveLineGutter,
     drawSelection,
     dropCursor,
@@ -33,7 +32,6 @@ const PlaygroundEditor: React.FC<PlaygroundEditorProps> = ({code, onChange, them
         if (!editorRef.current) return
 
         const basicExtensions = [
-            // lineNumbers(),
             highlightActiveLineGutter(),
             history(),
             drawSelection(),
