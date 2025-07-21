@@ -11,30 +11,30 @@ Here: [Tolk vs FunC: in short](../tolk-vs-func/in-short)
 ### Traditional comments
 
 <table className="cmp-func-tolk-table">
-    <thead>
-        <tr>
-            <th>FunC</th>
-            <th>Tolk</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-                <code>{";; comment"}</code>
-            </td>
-            <td>
-                <code>{"// comment"}</code>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <code>{"{- multiline comment -}"}</code>
-            </td>
-            <td>
-                <code>{"/* multiline comment */"}</code>
-            </td>
-        </tr>
-    </tbody>
+  <thead>
+    <tr>
+      <th>FunC</th>
+      <th>Tolk</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>{";; comment"}</code>
+      </td>
+      <td>
+        <code>{"// comment"}</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>{"{- multiline comment -}"}</code>
+      </td>
+      <td>
+        <code>{"/* multiline comment */"}</code>
+      </td>
+    </tr>
+  </tbody>
 </table>
 
 ### 2+2 is 4, not an identifier. Identifiers can only be alpha-numeric
@@ -46,22 +46,22 @@ You can even declare a variable with such a name.
 In Tolk, spaces are not mandatory. `2+2` is 4, as expected. `3+~x` is `3 + (~ x)`, and so on.
 
 <table className="cmp-func-tolk-table different-col-widths">
-    <thead>
-        <tr>
-            <th>FunC</th>
-            <th>Tolk</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-                <code>{"return 2+2;  ;; undefined function `2+2`"}</code>
-            </td>
-            <td>
-                <code>{"return 2+2;  // 4"}</code>
-            </td>
-        </tr>
-    </tbody>
+  <thead>
+    <tr>
+      <th>FunC</th>
+      <th>Tolk</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>{"return 2+2;  ;; undefined function `2+2`"}</code>
+      </td>
+      <td>
+        <code>{"return 2+2;  // 4"}</code>
+      </td>
+    </tr>
+  </tbody>
 </table>
 
 More precisely, an identifier can start from <code style={{display: 'inline-block'}}>{'[a-zA-Z$_]'}</code>
@@ -72,36 +72,34 @@ Note, that `cell`, `slice`, etc. are valid identifiers: `var cell = ...` or even
 You can use backticks to surround an identifier, and then it can contain any symbols (similar to Kotlin and some other languages). This potential usage is to allow keywords to be used as identifiers in case of code generation by a scheme, for example.
 
 <table className="cmp-func-tolk-table">
-    <thead>
-        <tr>
-            <th>FunC</th>
-            <th>Tolk</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-                <code>{"const op::increase = 0x1234;"}</code>
-            </td>
-            <td>
-                <code>{"const OP_INCREASE = 0x1234"}</code>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <code
-                    dangerouslySetInnerHTML={{__html: ";; even 2%&!2 is valid<br>int 2+2 = 5;"}}
-                ></code>
-            </td>
-            <td>
-                <code
-                    dangerouslySetInnerHTML={{
-                        __html: "// don't do like this :)<br>var \`2+2\` = 5;",
-                    }}
-                ></code>
-            </td>
-        </tr>
-    </tbody>
+  <thead>
+    <tr>
+      <th>FunC</th>
+      <th>Tolk</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>{"const op::increase = 0x1234;"}</code>
+      </td>
+      <td>
+        <code>{"const OP_INCREASE = 0x1234"}</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code dangerouslySetInnerHTML={{__html: ";; even 2%&!2 is valid<br>int 2+2 = 5;"}}></code>
+      </td>
+      <td>
+        <code
+          dangerouslySetInnerHTML={{
+            __html: "// don't do like this :)<br>var \`2+2\` = 5;",
+          }}
+        ></code>
+      </td>
+    </tr>
+  </tbody>
 </table>
 
 ### Impure by default, compiler won't drop user function calls
@@ -119,139 +117,137 @@ and then impure operations are forbidden in its body (exceptions, globals modifi
 ### New functions syntax: fun keyword, @ attributes, types on the right (like in TypeScript, Kotlin, Python, etc.)
 
 <table className="cmp-func-tolk-table">
-    <thead>
-        <tr>
-            <th>FunC</th>
-            <th>Tolk</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-                <code>{"cell parse_data(slice cs) { }"}</code>
-            </td>
-            <td>
-                <code>{"fun parse_data(cs: slice): cell { }"}</code>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <code>{"(cell, int) load_storage() { }"}</code>
-            </td>
-            <td>
-                <code>{"fun load_storage(): (cell, int) { }"}</code>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <code>{"() main() { ... }"}</code>
-            </td>
-            <td>
-                <code>{"fun main() { ... }"}</code>
-            </td>
-        </tr>
-    </tbody>
+  <thead>
+    <tr>
+      <th>FunC</th>
+      <th>Tolk</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>{"cell parse_data(slice cs) { }"}</code>
+      </td>
+      <td>
+        <code>{"fun parse_data(cs: slice): cell { }"}</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>{"(cell, int) load_storage() { }"}</code>
+      </td>
+      <td>
+        <code>{"fun load_storage(): (cell, int) { }"}</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>{"() main() { ... }"}</code>
+      </td>
+      <td>
+        <code>{"fun main() { ... }"}</code>
+      </td>
+    </tr>
+  </tbody>
 </table>
 
 Types of variables — also to the right:
 
 <table className="cmp-func-tolk-table different-col-widths">
-    <thead>
-        <tr>
-            <th>FunC</th>
-            <th>Tolk</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-                <code>{"slice cs = ...;"}</code>
-            </td>
-            <td>
-                <code>{"var cs: slice = ...;"}</code>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <code>{"(cell c, int n) = parse_data(cs);"}</code>
-            </td>
-            <td>
-                <code>{"var (c: cell, n: int) = parse_data(cs);"}</code>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <code>{"global int stake_at;"}</code>
-            </td>
-            <td>
-                <code>{"global stake_at: int"}</code>
-            </td>
-        </tr>
-    </tbody>
+  <thead>
+    <tr>
+      <th>FunC</th>
+      <th>Tolk</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>{"slice cs = ...;"}</code>
+      </td>
+      <td>
+        <code>{"var cs: slice = ...;"}</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>{"(cell c, int n) = parse_data(cs);"}</code>
+      </td>
+      <td>
+        <code>{"var (c: cell, n: int) = parse_data(cs);"}</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>{"global int stake_at;"}</code>
+      </td>
+      <td>
+        <code>{"global stake_at: int"}</code>
+      </td>
+    </tr>
+  </tbody>
 </table>
 
 Modifiers `inline` and others — with annotations:
 
 <table className="cmp-func-tolk-table">
-    <thead>
-        <tr>
-            <th>FunC</th>
-            <th>Tolk</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-                <code dangerouslySetInnerHTML={{__html: "<br>int f(cell s) inline {"}}></code>
-            </td>
-            <td>
-                <code dangerouslySetInnerHTML={{__html: "@inline<br>fun f(s: cell): int {"}}></code>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <code
-                    dangerouslySetInnerHTML={{__html: "<br>() load_data() impure inline_ref {"}}
-                ></code>
-            </td>
-            <td>
-                <code dangerouslySetInnerHTML={{__html: "@inline_ref<br>fun load_data() {"}}></code>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <code>{"global int stake_at;"}</code>
-            </td>
-            <td>
-                <code>{"global stake_at: int"}</code>
-            </td>
-        </tr>
-    </tbody>
+  <thead>
+    <tr>
+      <th>FunC</th>
+      <th>Tolk</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code dangerouslySetInnerHTML={{__html: "<br>int f(cell s) inline {"}}></code>
+      </td>
+      <td>
+        <code dangerouslySetInnerHTML={{__html: "@inline<br>fun f(s: cell): int {"}}></code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code dangerouslySetInnerHTML={{__html: "<br>() load_data() impure inline_ref {"}}></code>
+      </td>
+      <td>
+        <code dangerouslySetInnerHTML={{__html: "@inline_ref<br>fun load_data() {"}}></code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>{"global int stake_at;"}</code>
+      </td>
+      <td>
+        <code>{"global stake_at: int"}</code>
+      </td>
+    </tr>
+  </tbody>
 </table>
 
 `forall` — this way:
 
 <table className="cmp-func-tolk-table">
-    <thead>
-        <tr>
-            <th>FunC</th>
-            <th>Tolk</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-                <code>{"forall X -> tuple cons(X head, tuple tail)"}</code>
-            </td>
-            <td>
-                <code
-                    dangerouslySetInnerHTML={{
-                        __html: "fun cons&lt;X&gt;(head: X, tail: tuple): tuple",
-                    }}
-                ></code>
-            </td>
-        </tr>
-    </tbody>
+  <thead>
+    <tr>
+      <th>FunC</th>
+      <th>Tolk</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>{"forall X -> tuple cons(X head, tuple tail)"}</code>
+      </td>
+      <td>
+        <code
+          dangerouslySetInnerHTML={{
+            __html: "fun cons&lt;X&gt;(head: X, tail: tuple): tuple",
+          }}
+        ></code>
+      </td>
+    </tr>
+  </tbody>
 </table>
 
 `asm` implementation — like in FunC, but being properly aligned, it looks nicer:
@@ -277,51 +273,51 @@ There is also a `@deprecated` attribute, not affecting compilation, but for a hu
 In FunC, `method_id` (without arguments) declared a get method. In Tolk, you use a straightforward syntax:
 
 <table className="cmp-func-tolk-table">
-    <thead>
-        <tr>
-            <th>FunC</th>
-            <th>Tolk</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-                <code>{"int seqno() method_id { ... }"}</code>
-            </td>
-            <td>
-                <code>{"get fun seqno(): int { ... }"}</code>
-            </td>
-        </tr>
-    </tbody>
+  <thead>
+    <tr>
+      <th>FunC</th>
+      <th>Tolk</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>{"int seqno() method_id { ... }"}</code>
+      </td>
+      <td>
+        <code>{"get fun seqno(): int { ... }"}</code>
+      </td>
+    </tr>
+  </tbody>
 </table>
 
 For `method_id(xxx)` (uncommon in practice, but valid), there is an attribute:
 
 <table className="cmp-func-tolk-table">
-    <thead>
-        <tr>
-            <th>FunC</th>
-            <th>Tolk</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-                <code
-                    dangerouslySetInnerHTML={{
-                        __html: "<br>() after_code_upgrade(cont old_code) impure method_id(1666)",
-                    }}
-                ></code>
-            </td>
-            <td>
-                <code
-                    dangerouslySetInnerHTML={{
-                        __html: "@method_id(1666)<br>fun afterCodeUpgrade(oldCode: continuation)",
-                    }}
-                ></code>
-            </td>
-        </tr>
-    </tbody>
+  <thead>
+    <tr>
+      <th>FunC</th>
+      <th>Tolk</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code
+          dangerouslySetInnerHTML={{
+            __html: "<br>() after_code_upgrade(cont old_code) impure method_id(1666)",
+          }}
+        ></code>
+      </td>
+      <td>
+        <code
+          dangerouslySetInnerHTML={{
+            __html: "@method_id(1666)<br>fun afterCodeUpgrade(oldCode: continuation)",
+          }}
+        ></code>
+      </td>
+    </tr>
+  </tbody>
 </table>
 
 ### It's essential to declare types of parameters (though optional for locals)
@@ -395,68 +391,68 @@ fun send(msg: cell) {
 Tolk removes the old FunC-style string postfixes (`"..."c`, etc.) in favor of a **more transparent and more flexible approach**.
 
 <table className="cmp-func-tolk-table">
-    <thead>
-        <tr>
-            <th>FunC</th>
-            <th>Tolk</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-                <code>{'"..."c'}</code>
-            </td>
-            <td>
-                <code>{'stringCrc32("...")'}</code>
-            </td>
-        </tr>
-        <tr>
-            <td>—</td>
-            <td>
-                <code>{'stringCrc16("...")'}</code>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <code>{'"..."H'}</code>
-            </td>
-            <td>
-                <code>{'stringSha256("...")'}</code>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <code>{'"..."h'}</code>
-            </td>
-            <td>
-                <code>{'stringSha256_32("...")'}</code>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <code>{'"..."a'}</code>
-            </td>
-            <td>
-                <code>{'address("...")'}</code>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <code>{'"..."s'}</code>
-            </td>
-            <td>
-                <code>{'stringHexToSlice("...")'}</code>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <code>{'"..."u'}</code>
-            </td>
-            <td>
-                <code>{'stringToBase256("...")'}</code>
-            </td>
-        </tr>
-    </tbody>
+  <thead>
+    <tr>
+      <th>FunC</th>
+      <th>Tolk</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>{'"..."c'}</code>
+      </td>
+      <td>
+        <code>{'stringCrc32("...")'}</code>
+      </td>
+    </tr>
+    <tr>
+      <td>—</td>
+      <td>
+        <code>{'stringCrc16("...")'}</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>{'"..."H'}</code>
+      </td>
+      <td>
+        <code>{'stringSha256("...")'}</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>{'"..."h'}</code>
+      </td>
+      <td>
+        <code>{'stringSha256_32("...")'}</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>{'"..."a'}</code>
+      </td>
+      <td>
+        <code>{'address("...")'}</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>{'"..."s'}</code>
+      </td>
+      <td>
+        <code>{'stringHexToSlice("...")'}</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>{'"..."u'}</code>
+      </td>
+      <td>
+        <code>{'stringToBase256("...")'}</code>
+      </td>
+    </tr>
+  </tbody>
 </table>
 
 These functions:
@@ -520,30 +516,30 @@ if (smth) {
 ### Function ton("...") for human-readable amounts of Toncoins
 
 <table className="cmp-func-tolk-table">
-    <thead>
-        <tr>
-            <th>FunC</th>
-            <th>Tolk</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-                <code>{"int cost = 50000000;"}</code>
-            </td>
-            <td>
-                <code>{'val cost = ton("0.05");'}</code>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <code>{"const ONE_TON = 1000000000;"}</code>
-            </td>
-            <td>
-                <code>{'const ONE_TON = ton("1")'}</code>
-            </td>
-        </tr>
-    </tbody>
+  <thead>
+    <tr>
+      <th>FunC</th>
+      <th>Tolk</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>{"int cost = 50000000;"}</code>
+      </td>
+      <td>
+        <code>{'val cost = ton("0.05");'}</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>{"const ONE_TON = 1000000000;"}</code>
+      </td>
+      <td>
+        <code>{'const ONE_TON = ton("1")'}</code>
+      </td>
+    </tr>
+  </tbody>
 </table>
 
 The function `ton()` only accepts constant values (e.g., `ton(some_var)` is invalid).
@@ -703,22 +699,22 @@ Also note that `T` for asm functions must occupy one stack slot, whereas for a u
 ### #include → import. Strict imports
 
 <table className="cmp-func-tolk-table">
-    <thead>
-        <tr>
-            <th>FunC</th>
-            <th>Tolk</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-                <code>{'#include "another.fc";'}</code>
-            </td>
-            <td>
-                <code>{'import "another"'}</code>
-            </td>
-        </tr>
-    </tbody>
+  <thead>
+    <tr>
+      <th>FunC</th>
+      <th>Tolk</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>{'#include "another.fc";'}</code>
+      </td>
+      <td>
+        <code>{'import "another"'}</code>
+      </td>
+    </tr>
+  </tbody>
 </table>
 
 In Tolk, you can not use a symbol from `a.tolk` without importing this file. In other words, **import what you use**.
@@ -761,46 +757,46 @@ It sounds simple, but internally, it's a very huge job. To make this available, 
 Creating null values and checking variables on null looks very pretty now.
 
 <table className="cmp-func-tolk-table different-col-widths">
-    <thead>
-        <tr>
-            <th>FunC</th>
-            <th>Tolk</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-                <code>{"a = null()"}</code>
-            </td>
-            <td>
-                <code>{"a = null"}</code>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <code>{"if (null?(a))"}</code>
-            </td>
-            <td>
-                <code>{"if (a == null)"}</code>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <code>{"if (~ null?(b))"}</code>
-            </td>
-            <td>
-                <code>{"if (b != null)"}</code>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <code>{"if (~ cell_null?(c))"}</code>
-            </td>
-            <td>
-                <code>{"if (c != null)"}</code>
-            </td>
-        </tr>
-    </tbody>
+  <thead>
+    <tr>
+      <th>FunC</th>
+      <th>Tolk</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>{"a = null()"}</code>
+      </td>
+      <td>
+        <code>{"a = null"}</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>{"if (null?(a))"}</code>
+      </td>
+      <td>
+        <code>{"if (a == null)"}</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>{"if (~ null?(b))"}</code>
+      </td>
+      <td>
+        <code>{"if (b != null)"}</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>{"if (~ cell_null?(c))"}</code>
+      </td>
+      <td>
+        <code>{"if (c != null)"}</code>
+      </td>
+    </tr>
+  </tbody>
 </table>
 
 ### throw and assert keywords
@@ -810,46 +806,46 @@ Tolk dramatically simplifies working with exceptions.
 If FunC has `throw()`, `throw_if()`, `throw_arg_if()`, and the same for unless, Tolk has only two primitives: `throw` and `assert`.
 
 <table className="cmp-func-tolk-table different-col-widths">
-    <thead>
-        <tr>
-            <th>FunC</th>
-            <th>Tolk</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-                <code>{"throw(excNo)"}</code>
-            </td>
-            <td>
-                <code>{"throw excNo"}</code>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <code>{"throw_arg(arg, excNo)"}</code>
-            </td>
-            <td>
-                <code>{"throw (excNo, arg)"}</code>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <code>{"throw_unless(excNo, condition)"}</code>
-            </td>
-            <td>
-                <code>{"assert(condition, excNo)"}</code>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <code>{"throw_if(excNo, condition)"}</code>
-            </td>
-            <td>
-                <code>{"assert(!condition, excNo)"}</code>
-            </td>
-        </tr>
-    </tbody>
+  <thead>
+    <tr>
+      <th>FunC</th>
+      <th>Tolk</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>{"throw(excNo)"}</code>
+      </td>
+      <td>
+        <code>{"throw excNo"}</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>{"throw_arg(arg, excNo)"}</code>
+      </td>
+      <td>
+        <code>{"throw (excNo, arg)"}</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>{"throw_unless(excNo, condition)"}</code>
+      </td>
+      <td>
+        <code>{"assert(condition, excNo)"}</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>{"throw_if(excNo, condition)"}</code>
+      </td>
+      <td>
+        <code>{"assert(!condition, excNo)"}</code>
+      </td>
+    </tr>
+  </tbody>
 </table>
 
 Note, that `!condition` is possible since logical NOT is available, see below.
@@ -864,67 +860,67 @@ assert(condition) throw excNo;
 Also, Tolk swaps `catch` arguments: it's `catch (excNo, arg)`, both optional (since arg is most likely empty).
 
 <table className="cmp-func-tolk-table">
-    <thead>
-        <tr>
-            <th>FunC</th>
-            <th>Tolk</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-                <code>{"try { } catch (_, _) { }"}</code>
-            </td>
-            <td>
-                <code>{"try { } catch { }"}</code>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <code>{"try { } catch (_, excNo) { }"}</code>
-            </td>
-            <td>
-                <code>{"try { } catch(excNo) { }"}</code>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <code>{"try { } catch (arg, excNo) { }"}</code>
-            </td>
-            <td>
-                <code>{"try { } catch(excNo, arg) { }"}</code>
-            </td>
-        </tr>
-    </tbody>
+  <thead>
+    <tr>
+      <th>FunC</th>
+      <th>Tolk</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>{"try { } catch (_, _) { }"}</code>
+      </td>
+      <td>
+        <code>{"try { } catch { }"}</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>{"try { } catch (_, excNo) { }"}</code>
+      </td>
+      <td>
+        <code>{"try { } catch(excNo) { }"}</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>{"try { } catch (arg, excNo) { }"}</code>
+      </td>
+      <td>
+        <code>{"try { } catch(excNo, arg) { }"}</code>
+      </td>
+    </tr>
+  </tbody>
 </table>
 
 ### do ... until → do ... while
 
 <table className="cmp-func-tolk-table">
-    <thead>
-        <tr>
-            <th>FunC</th>
-            <th>Tolk</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-                <code>{"do { ... } until (~ condition);"}</code>
-            </td>
-            <td>
-                <code>{"do { ... } while (condition);"}</code>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <code>{"do { ... } until (condition);"}</code>
-            </td>
-            <td>
-                <code>{"do { ... } while (!condition);"}</code>
-            </td>
-        </tr>
-    </tbody>
+  <thead>
+    <tr>
+      <th>FunC</th>
+      <th>Tolk</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>{"do { ... } until (~ condition);"}</code>
+      </td>
+      <td>
+        <code>{"do { ... } while (condition);"}</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>{"do { ... } until (condition);"}</code>
+      </td>
+      <td>
+        <code>{"do { ... } while (!condition);"}</code>
+      </td>
+    </tr>
+  </tbody>
 </table>
 
 Note, that `!condition` is possible since logical NOT is available, see below.
@@ -1016,30 +1012,32 @@ Only one input file can be passed, others should be `import`'ed.
 All names in the standard library were reconsidered. Now, functions are called using longer but clear names.
 
 <table className="cmp-func-tolk-table">
-    <thead>
-        <tr>
-            <th>FunC</th>
-            <th>Tolk</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-                <code
-                    dangerouslySetInnerHTML={{
-                        __html: "cur_lt()<br>car(l)<br>get_balance().pair_first()<br>raw_reserve(count)<br>dict~idict_add?(...)<br>dict~udict::delete_get_max()<br>t~tpush(triple(x, y, z))<br>s.slice_bits()<br>~dump(x)<br>...",
-                    }}
-                ></code>
-            </td>
-            <td>
-                <code
-                    dangerouslySetInnerHTML={{
-                        __html: "blockchain.logicalTime()<br>listGetHead(l)<br>contract.getOriginalBalance()<br>reserveToncoinsOnBalance(count)<br>dict.iDictSetIfNotExists(...)<br>dict.uDictDeleteLastAndGet()<br>t.push([x, y, z])<br>s.remainingBitsCount()<br>debug.print(x)<br>...",
-                    }}
-                ></code>
-            </td>
-        </tr>
-    </tbody>
+  <thead>
+    <tr>
+      <th>FunC</th>
+      <th>Tolk</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code
+          dangerouslySetInnerHTML={{
+            __html:
+              "cur_lt()<br>car(l)<br>get_balance().pair_first()<br>raw_reserve(count)<br>dict~idict_add?(...)<br>dict~udict::delete_get_max()<br>t~tpush(triple(x, y, z))<br>s.slice_bits()<br>~dump(x)<br>...",
+          }}
+        ></code>
+      </td>
+      <td>
+        <code
+          dangerouslySetInnerHTML={{
+            __html:
+              "blockchain.logicalTime()<br>listGetHead(l)<br>contract.getOriginalBalance()<br>reserveToncoinsOnBalance(count)<br>dict.iDictSetIfNotExists(...)<br>dict.uDictDeleteLastAndGet()<br>t.push([x, y, z])<br>s.remainingBitsCount()<br>debug.print(x)<br>...",
+          }}
+        ></code>
+      </td>
+    </tr>
+  </tbody>
 </table>
 
 A former "stdlib.fc" was split into multiple files: common.tolk, tvm-dicts.tolk, and others.
@@ -1049,29 +1047,29 @@ Continue here: [Tolk vs FunC: standard library](../tolk-vs-func/stdlib).
 ### stdlib is now embedded, not downloaded from GitHub
 
 <table className="cmp-func-tolk-table">
-    <thead>
-        <tr>
-            <th>FunC</th>
-            <th>Tolk</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-                <ol style={{margin: 0}}>
-                    <li>Download stdlib.fc from GitHub</li>
-                    <li>Save into your project</li>
-                    <li>`#include "stdlib.fc";`</li>
-                    <li>Use standard functions</li>
-                </ol>
-            </td>
-            <td>
-                <ol style={{margin: 0}}>
-                    <li>Use standard functions</li>
-                </ol>
-            </td>
-        </tr>
-    </tbody>
+  <thead>
+    <tr>
+      <th>FunC</th>
+      <th>Tolk</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <ol style={{margin: 0}}>
+          <li>Download stdlib.fc from GitHub</li>
+          <li>Save into your project</li>
+          <li>`#include "stdlib.fc";`</li>
+          <li>Use standard functions</li>
+        </ol>
+      </td>
+      <td>
+        <ol style={{margin: 0}}>
+          <li>Use standard functions</li>
+        </ol>
+      </td>
+    </tr>
+  </tbody>
 </table>
 
 In Tolk, stdlib a part of distribution. Standard library is inseparable, since keeping a triple **language, compiler, stdlib** together is the only correct way to maintain release cycle.
@@ -1097,186 +1095,187 @@ JetBrains IDE plugin automatically discovers stdlib folder and inserts necessary
 In FunC, there are only bitwise operators `~ & | ^`. Developers making first steps, thinking "okay, no logical, I'll use bitwise in the same manner", often do errors, since operator behavior is completely different:
 
 <table className="cmp-func-tolk-table">
-    <thead>
-        <tr>
-            <th>`a & b`</th>
-            <th>`a && b`</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td colSpan={2}>sometimes, identical:</td>
-        </tr>
-        <tr>
-            <td>
-                <code>{"0 & X = 0"}</code>
-            </td>
-            <td>
-                <code>{"0 & X = 0"}</code>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <code>{"-1 & X = -1"}</code>
-            </td>
-            <td>
-                <code>{"-1 & X = -1"}</code>
-            </td>
-        </tr>
-        <tr>
-            <td colSpan={2}>but generally, not:</td>
-        </tr>
-        <tr>
-            <td>
-                <code>{"1 & 2 = 0"}</code>
-            </td>
-            <td>
-                <code>{"1 && 2 = -1 (true)"}</code>
-            </td>
-        </tr>
-    </tbody>
+  <thead>
+    <tr>
+      <th>`a & b`</th>
+      <th>`a && b`</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colSpan={2}>sometimes, identical:</td>
+    </tr>
+    <tr>
+      <td>
+        <code>{"0 & X = 0"}</code>
+      </td>
+      <td>
+        <code>{"0 & X = 0"}</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>{"-1 & X = -1"}</code>
+      </td>
+      <td>
+        <code>{"-1 & X = -1"}</code>
+      </td>
+    </tr>
+    <tr>
+      <td colSpan={2}>but generally, not:</td>
+    </tr>
+    <tr>
+      <td>
+        <code>{"1 & 2 = 0"}</code>
+      </td>
+      <td>
+        <code>{"1 && 2 = -1 (true)"}</code>
+      </td>
+    </tr>
+  </tbody>
 </table>
 
 <table className="cmp-func-tolk-table different-col-widths">
-    <thead>
-        <tr>
-            <th>`~ found`</th>
-            <th>`!found`</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td colSpan={2}>sometimes, identical:</td>
-        </tr>
-        <tr>
-            <td>
-                <code>{"true (-1) → false (0)"}</code>
-            </td>
-            <td>
-                <code>{"-1 → 0"}</code>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <code>{"false (0) → true (-1)"}</code>
-            </td>
-            <td>
-                <code>{"0 → -1"}</code>
-            </td>
-        </tr>
-        <tr>
-            <td colSpan={2}>but generally, not:</td>
-        </tr>
-        <tr>
-            <td>
-                <code>{"1 → -2"}</code>
-            </td>
-            <td>
-                <code>{"1 → 0 (false)"}</code>
-            </td>
-        </tr>
-    </tbody>
+  <thead>
+    <tr>
+      <th>`~ found`</th>
+      <th>`!found`</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colSpan={2}>sometimes, identical:</td>
+    </tr>
+    <tr>
+      <td>
+        <code>{"true (-1) → false (0)"}</code>
+      </td>
+      <td>
+        <code>{"-1 → 0"}</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>{"false (0) → true (-1)"}</code>
+      </td>
+      <td>
+        <code>{"0 → -1"}</code>
+      </td>
+    </tr>
+    <tr>
+      <td colSpan={2}>but generally, not:</td>
+    </tr>
+    <tr>
+      <td>
+        <code>{"1 → -2"}</code>
+      </td>
+      <td>
+        <code>{"1 → 0 (false)"}</code>
+      </td>
+    </tr>
+  </tbody>
 </table>
 
 <table className="cmp-func-tolk-table different-col-widths">
-    <thead>
-        <tr>
-            <th>
-                <code>condition & f()</code>
-            </th>
-            <th>
-                <code>condition && f()</code>
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-                <code className="inline">f()</code> is called always
-            </td>
-            <td>
-                <code className="inline">f()</code> is called only if{" "}
-                <code className="inline">condition</code>
-            </td>
-        </tr>
-    </tbody>
+  <thead>
+    <tr>
+      <th>
+        <code>condition & f()</code>
+      </th>
+      <th>
+        <code>condition && f()</code>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code className="inline">f()</code> is called always
+      </td>
+      <td>
+        <code className="inline">f()</code> is called only if{" "}
+        <code className="inline">condition</code>
+      </td>
+    </tr>
+  </tbody>
 </table>
 
 <table className="cmp-func-tolk-table different-col-widths">
-    <thead>
-        <tr>
-            <th>
-                <code>condition | f()</code>
-            </th>
-            <th>
-                <code>condition || f()</code>
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-                <code className="inline">f()</code> is called always
-            </td>
-            <td>
-                <code className="inline">f()</code> is called only if{" "}
-                <code className="inline">condition</code> is false
-            </td>
-        </tr>
-    </tbody>
+  <thead>
+    <tr>
+      <th>
+        <code>condition | f()</code>
+      </th>
+      <th>
+        <code>condition || f()</code>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code className="inline">f()</code> is called always
+      </td>
+      <td>
+        <code className="inline">f()</code> is called only if{" "}
+        <code className="inline">condition</code> is false
+      </td>
+    </tr>
+  </tbody>
 </table>
 
 Tolk supports logical operators. They behave exactly as you get used to (right column). For now, `&&` and `||` sometimes produce not optimal Fift code, but in the future, Tolk compiler will become smarter in this case. It's negligible, just use them like in other languages.
 
 <table className="cmp-func-tolk-table different-col-widths">
-    <thead>
-        <tr>
-            <th>FunC</th>
-            <th>Tolk</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-                <code>{"if (~ found?)"}</code>
-            </td>
-            <td>
-                <code>{"if (!found)"}</code>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <code
-                    dangerouslySetInnerHTML={{
-                        __html: "if (~ found?) {<br>    if (cs~load_int(32) == 0) {<br>        ...<br>    }<br>}",
-                    }}
-                ></code>
-            </td>
-            <td>
-                <code
-                    dangerouslySetInnerHTML={{
-                        __html: "if (!found && cs.loadInt(32) == 0) {<br>    ...<br>}",
-                    }}
-                ></code>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <code>{"ifnot (cell_null?(signatures))"}</code>
-            </td>
-            <td>
-                <code>{"if (signatures != null)"}</code>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <code>{"elseifnot (eq_checksum)"}</code>
-            </td>
-            <td>
-                <code>{"else if (!eqChecksum)"}</code>
-            </td>
-        </tr>
-    </tbody>
+  <thead>
+    <tr>
+      <th>FunC</th>
+      <th>Tolk</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>{"if (~ found?)"}</code>
+      </td>
+      <td>
+        <code>{"if (!found)"}</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code
+          dangerouslySetInnerHTML={{
+            __html:
+              "if (~ found?) {<br>    if (cs~load_int(32) == 0) {<br>        ...<br>    }<br>}",
+          }}
+        ></code>
+      </td>
+      <td>
+        <code
+          dangerouslySetInnerHTML={{
+            __html: "if (!found && cs.loadInt(32) == 0) {<br>    ...<br>}",
+          }}
+        ></code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>{"ifnot (cell_null?(signatures))"}</code>
+      </td>
+      <td>
+        <code>{"if (signatures != null)"}</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>{"elseifnot (eq_checksum)"}</code>
+      </td>
+      <td>
+        <code>{"else if (!eqChecksum)"}</code>
+      </td>
+    </tr>
+  </tbody>
 </table>
 
 Keywords `ifnot` and `elseifnot` were removed, since now we have logical not (for optimization, Tolk compiler generates `IFNOTJMP`, btw). The `elseif` keyword was replaced by the traditional `else if`.

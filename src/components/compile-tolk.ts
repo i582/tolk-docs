@@ -2,14 +2,14 @@ import {runTolkCompiler} from "@ton/tolk-js"
 import {Cell} from "@ton/core"
 
 export const compileTolkCode = async (code: string): Promise<Cell | undefined> => {
-    const result = await runTolkCompiler({
-        entrypointFileName: "main.tolk",
-        fsReadCallback: () => code,
-        withStackComments: true,
-        withSrcLineComments: true,
-    })
-    if (result.status === "error") {
-        throw new Error(result.message)
-    }
-    return Cell.fromBase64(result.codeBoc64)
+  const result = await runTolkCompiler({
+    entrypointFileName: "main.tolk",
+    fsReadCallback: () => code,
+    withStackComments: true,
+    withSrcLineComments: true,
+  })
+  if (result.status === "error") {
+    throw new Error(result.message)
+  }
+  return Cell.fromBase64(result.codeBoc64)
 }

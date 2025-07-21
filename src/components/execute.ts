@@ -4,63 +4,60 @@ import {type SandboxContract, type TreasuryContract} from "@ton/sandbox"
 import {Blockchain} from "@ton/sandbox"
 
 export const executeCell = async (
-    codeCell: Cell,
-    id: number = 0,
+  codeCell: Cell,
+  id: number = 0,
 ): Promise<[TupleReader, string]> => {
-    class TestContract implements Contract {
-        public readonly address: Address
-        public readonly init?: StateInit
+  class TestContract implements Contract {
+    public readonly address: Address
+    public readonly init?: StateInit
 
-        public constructor(address: Address, init?: StateInit) {
-            this.address = address
-            this.init = init
-        }
-
-        public async send(
-            provider: ContractProvider,
-            via: Sender,
-            args: {value: bigint; bounce?: boolean | null | undefined},
-            body: Cell,
-        ) {
-            await provider.internal(via, {...args, body: body})
-        }
-
-        public async getAny(
-            provider: ContractProvider,
-            id: number,
-        ): Promise<[TupleReader, string]> {
-            const builder = new TupleBuilder()
-            const res = await provider.get(id, builder.build())
-
-            // @ts-expect-error TS2551
-            return [res.stack, res.vmLogs]
-        }
+    public constructor(address: Address, init?: StateInit) {
+      this.address = address
+      this.init = init
     }
 
-    const blockchain: Blockchain = await Blockchain.create()
-    blockchain.verbosity.print = false
-    blockchain.verbosity.vmLogs = "vm_logs_verbose"
-    const treasure: SandboxContract<TreasuryContract> = await blockchain.treasury("treasure")
-
-    const init: StateInit = {
-        code: codeCell,
-        data: new Cell(),
+    public async send(
+      provider: ContractProvider,
+      via: Sender,
+      args: {value: bigint; bounce?: boolean | null | undefined},
+      body: Cell,
+    ) {
+      await provider.internal(via, {...args, body: body})
     }
 
-    const address = contractAddress(0, init)
-    const contract = new TestContract(address, init)
+    public async getAny(provider: ContractProvider, id: number): Promise<[TupleReader, string]> {
+      const builder = new TupleBuilder()
+      const res = await provider.get(id, builder.build())
 
-    const openContract = blockchain.openContract(contract)
+      // @ts-expect-error TS2551
+      return [res.stack, res.vmLogs]
+    }
+  }
 
-    // Deploy
-    await openContract.send(
-        treasure.getSender(),
-        {
-            value: toNano("10"),
-        },
-        new Cell(),
-    )
+  const blockchain: Blockchain = await Blockchain.create()
+  blockchain.verbosity.print = false
+  blockchain.verbosity.vmLogs = "vm_logs_verbose"
+  const treasure: SandboxContract<TreasuryContract> = await blockchain.treasury("treasure")
 
-    const [stack, vmLogs] = await openContract.getAny(id)
-    return [stack, vmLogs]
+  const init: StateInit = {
+    code: codeCell,
+    data: new Cell(),
+  }
+
+  const address = contractAddress(0, init)
+  const contract = new TestContract(address, init)
+
+  const openContract = blockchain.openContract(contract)
+
+  // Deploy
+  await openContract.send(
+    treasure.getSender(),
+    {
+      value: toNano("10"),
+    },
+    new Cell(),
+  )
+
+  const [stack, vmLogs] = await openContract.getAny(id)
+  return [stack, vmLogs]
 }

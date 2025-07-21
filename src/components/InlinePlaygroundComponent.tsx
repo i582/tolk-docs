@@ -8,9 +8,9 @@ import {useStarlightTheme} from "./useStarlightTheme.tsx"
 import styles from "./InlinePlaygroundComponent.module.css"
 
 interface InlinePlaygroundComponentProps {
-    readonly children?: React.ReactNode
-    readonly initialCode?: string
-    readonly code?: string
+  readonly children?: React.ReactNode
+  readonly initialCode?: string
+  readonly code?: string
 }
 
 const DEFAULT_CODE = `fun add(a: int, b: int) { return a + b }
@@ -20,126 +20,118 @@ fun main(): int {
 }`
 
 const InlinePlaygroundComponent: React.FC<InlinePlaygroundComponentProps> = ({
-    children,
-    initialCode = DEFAULT_CODE,
-    code: codeProp,
+  children,
+  initialCode = DEFAULT_CODE,
+  code: codeProp,
 }) => {
-    const theme = useStarlightTheme()
-    const getInitialCode = () => {
-        if (codeProp) return codeProp
-        if (typeof children === "string") return children
-        if (
-            React.isValidElement(children) &&
-            typeof children.props === "object" &&
-            children.props !== null &&
-            "value" in children.props &&
-            typeof children.props.value === "string"
-        ) {
-            return children.props.value ?? initialCode
-        }
-        return initialCode
+  const theme = useStarlightTheme()
+  const getInitialCode = () => {
+    if (codeProp) return codeProp
+    if (typeof children === "string") return children
+    if (
+      React.isValidElement(children) &&
+      typeof children.props === "object" &&
+      children.props !== null &&
+      "value" in children.props &&
+      typeof children.props.value === "string"
+    ) {
+      return children.props.value ?? initialCode
+    }
+    return initialCode
+  }
+
+  const [code, setCode] = useState(getInitialCode)
+  const [isTerminalOpen, setIsTerminalOpen] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [isBundleLoading, setIsBundleLoading] = useState(false)
+  const [bundleLoaded, setBundleLoaded] = useState(false)
+  const [terminalOutput, setTerminalOutput] = useState("")
+
+  const loadBundle = async () => {
+    if (bundleLoaded) return
+
+    setIsBundleLoading(true)
+    setTerminalOutput("Loading Tolk runtime...\n")
+
+    try {
+      await import("./playground-runtime")
+      setBundleLoaded(true)
+      setTerminalOutput(prev => prev + "Runtime loaded successfully!\n")
+    } catch (error) {
+      console.error("Failed to load runtime:", error)
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+      setTerminalOutput(prev => prev + `Failed to load runtime: ${error}\n`)
+      setTerminalOutput(prev => prev + "Note: Runtime loading works in production build.\n")
+      throw error
+    } finally {
+      setIsBundleLoading(false)
+    }
+  }
+
+  const runCode = async () => {
+    if (!bundleLoaded) {
+      setIsTerminalOpen(true)
+      try {
+        await loadBundle()
+      } catch (error) {
+        console.error("Failed to load runtime:", error)
+        setIsLoading(false)
+        return
+      }
     }
 
-    const [code, setCode] = useState(getInitialCode)
-    const [isTerminalOpen, setIsTerminalOpen] = useState(false)
-    const [isLoading, setIsLoading] = useState(false)
-    const [isBundleLoading, setIsBundleLoading] = useState(false)
-    const [bundleLoaded, setBundleLoaded] = useState(false)
-    const [terminalOutput, setTerminalOutput] = useState("")
+    setIsLoading(true)
+    setIsTerminalOpen(true)
+    setTerminalOutput("")
 
-    const loadBundle = async () => {
-        if (bundleLoaded) return
+    try {
+      const {compileAndExecuteTolk} = await import("./playground-runtime")
 
-        setIsBundleLoading(true)
-        setTerminalOutput("Loading Tolk runtime...\n")
+      setTerminalOutput("Starting compilation...")
 
-        try {
-            await import("./playground-runtime")
-            setBundleLoaded(true)
-            setTerminalOutput(prev => prev + "Runtime loaded successfully!\n")
-        } catch (error) {
-            console.error("Failed to load runtime:", error)
-            // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-            setTerminalOutput(prev => prev + `Failed to load runtime: ${error}\n`)
-            setTerminalOutput(prev => prev + "Note: Runtime loading works in production build.\n")
-            throw error
-        } finally {
-            setIsBundleLoading(false)
+      const result = await compileAndExecuteTolk(code)
+
+      if (result.compilation.success && result.execution) {
+        if (result.execution.success) {
+          setTerminalOutput(`${result.execution?.output}\n`)
+        } else {
+          setTerminalOutput(
+            prev => prev + `✗ Execution failed: ${result.execution?.error ?? "Unknown error"}\n`,
+          )
         }
+      } else {
+        setTerminalOutput(prev => prev + `✗ Compilation failed: ${result.compilation.error}\n`)
+      }
+    } catch (error) {
+      console.error("Runtime error:", error)
+      setTerminalOutput(
+        prev =>
+          prev + `✗ Runtime error: ${error instanceof Error ? error.message : "Unknown error"}\n`,
+      )
+    } finally {
+      setIsLoading(false)
     }
+  }
 
-    const runCode = async () => {
-        if (!bundleLoaded) {
-            setIsTerminalOpen(true)
-            try {
-                await loadBundle()
-            } catch (error) {
-                console.error("Failed to load runtime:", error)
-                setIsLoading(false)
-                return
-            }
-        }
+  return (
+    <div
+      className={`not-content ${styles.playground} ${theme === "dark" ? styles.playgroundDark : styles.playgroundLight}`}
+    >
+      <PlaygroundEditor code={code} onChange={setCode} theme={theme} />
 
-        setIsLoading(true)
-        setIsTerminalOpen(true)
-        setTerminalOutput("")
+      <PlaygroundRunButton onClick={() => void runCode()} disabled={isLoading || isBundleLoading} />
 
-        try {
-            const {compileAndExecuteTolk} = await import("./playground-runtime")
+      <PlaygroundCopyButton code={code} />
 
-            setTerminalOutput("Starting compilation...")
-
-            const result = await compileAndExecuteTolk(code)
-
-            if (result.compilation.success && result.execution) {
-                if (result.execution.success) {
-                    setTerminalOutput(`${result.execution?.output}\n`)
-                } else {
-                    setTerminalOutput(
-                        prev =>
-                            prev +
-                            `✗ Execution failed: ${result.execution?.error ?? "Unknown error"}\n`,
-                    )
-                }
-            } else {
-                setTerminalOutput(
-                    prev => prev + `✗ Compilation failed: ${result.compilation.error}\n`,
-                )
-            }
-        } catch (error) {
-            console.error("Runtime error:", error)
-            setTerminalOutput(
-                prev =>
-                    prev +
-                    `✗ Runtime error: ${error instanceof Error ? error.message : "Unknown error"}\n`,
-            )
-        } finally {
-            setIsLoading(false)
-        }
-    }
-
-    return (
-        <div
-            className={`not-content ${styles.playground} ${theme === "dark" ? styles.playgroundDark : styles.playgroundLight}`}
-        >
-            <PlaygroundEditor code={code} onChange={setCode} theme={theme} />
-
-            <PlaygroundRunButton
-                onClick={() => void runCode()}
-                disabled={isLoading || isBundleLoading}
-            />
-
-            <PlaygroundCopyButton code={code} />
-
-            <PlaygroundTerminal
-                isOpen={isTerminalOpen}
-                onClose={() => setIsTerminalOpen(false)}
-                output={terminalOutput}
-                isLoading={isLoading}
-                isDarkTheme={theme === "dark"}
-            />
-        </div>
-    )
+      <PlaygroundTerminal
+        isOpen={isTerminalOpen}
+        onClose={() => setIsTerminalOpen(false)}
+        output={terminalOutput}
+        isLoading={isLoading}
+        isDarkTheme={theme === "dark"}
+      />
+    </div>
+  )
 }
 
 export default InlinePlaygroundComponent

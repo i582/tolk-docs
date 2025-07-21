@@ -1,14 +1,14 @@
 {
-    "extends": "./tsconfig.json",
-    "include": [
-        "src/**/*.ts",
-        "src/**/*.tsx",
-        "*.config.ts",
-        "*.config.js",
-        ".*.js",
-        "eslint.config.js"
-    ],
-    "compilerOptions": {
-        "noEmit": true
-    }
+  "extends": "./tsconfig.json",
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "*.config.ts",
+    "*.config.js",
+    ".*.js",
+    "eslint.config.js"
+  ],
+  "compilerOptions": {
+    "noEmit": true
+  }
 }

@@ -21,102 +21,104 @@ This is a drastic change. If FunC has `.methods()` and `~methods()`, Tolk has on
 The goal is to have calls identical to JS and other languages:
 
 <table className="cmp-func-tolk-table">
-    <thead>
-        <tr>
-            <th>FunC</th>
-            <th>Tolk</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-                <code>{"int flags = cs~load_uint(32);"}</code>
-            </td>
-            <td>
-                <code>{"var flags = cs.loadUint(32);"}</code>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <code>{"(cs, int flags) = cs.load_uint(32);"}</code>
-            </td>
-            <td>
-                <code>{"var flags = cs.loadUint(32);"}</code>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <code>{"(slice cs2, int flags) = cs.load_uint(32);"}</code>
-            </td>
-            <td>
-                <code
-                    dangerouslySetInnerHTML={{
-                        __html: "var cs2 = cs;<br>var flags = cs2.loadUint(32);",
-                    }}
-                ></code>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <code
-                    dangerouslySetInnerHTML={{
-                        __html: "slice data = get_data()<br>             .begin_parse();<br>int flag = data~load_uint(32);",
-                    }}
-                ></code>
-            </td>
-            <td>
-                <code
-                    dangerouslySetInnerHTML={{
-                        __html: "val flag = contract.getData()<br>           .beginParse()<br>           .loadUint(32);",
-                    }}
-                ></code>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <code>{"dict~udict_set(...);"}</code>
-            </td>
-            <td>
-                <code>{"dict.uDictSet(...);"}</code>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <code>{"b~store_uint(x, 32);"}</code>
-            </td>
-            <td>
-                <code>{"b.storeInt(x, 32);"}</code>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <code>{"b = b.store_int(x, 32);"}</code>
-            </td>
-            <td>
-                <code
-                    dangerouslySetInnerHTML={{
-                        __html: "b.storeInt(x, 32);<br><br>// also works<br>b = b.storeUint(32);",
-                    }}
-                ></code>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <code
-                    dangerouslySetInnerHTML={{
-                        __html: "b = b.store_int(x, 32)<br>     .store_int(y, 32);",
-                    }}
-                ></code>
-            </td>
-            <td>
-                <code
-                    dangerouslySetInnerHTML={{
-                        __html: "b.storeInt(x, 32)<br> .storeInt(y, 32);<br><br>// b = ...; also works",
-                    }}
-                ></code>
-            </td>
-        </tr>
-    </tbody>
+  <thead>
+    <tr>
+      <th>FunC</th>
+      <th>Tolk</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>{"int flags = cs~load_uint(32);"}</code>
+      </td>
+      <td>
+        <code>{"var flags = cs.loadUint(32);"}</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>{"(cs, int flags) = cs.load_uint(32);"}</code>
+      </td>
+      <td>
+        <code>{"var flags = cs.loadUint(32);"}</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>{"(slice cs2, int flags) = cs.load_uint(32);"}</code>
+      </td>
+      <td>
+        <code
+          dangerouslySetInnerHTML={{
+            __html: "var cs2 = cs;<br>var flags = cs2.loadUint(32);",
+          }}
+        ></code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code
+          dangerouslySetInnerHTML={{
+            __html:
+              "slice data = get_data()<br>             .begin_parse();<br>int flag = data~load_uint(32);",
+          }}
+        ></code>
+      </td>
+      <td>
+        <code
+          dangerouslySetInnerHTML={{
+            __html:
+              "val flag = contract.getData()<br>           .beginParse()<br>           .loadUint(32);",
+          }}
+        ></code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>{"dict~udict_set(...);"}</code>
+      </td>
+      <td>
+        <code>{"dict.uDictSet(...);"}</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>{"b~store_uint(x, 32);"}</code>
+      </td>
+      <td>
+        <code>{"b.storeInt(x, 32);"}</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>{"b = b.store_int(x, 32);"}</code>
+      </td>
+      <td>
+        <code
+          dangerouslySetInnerHTML={{
+            __html: "b.storeInt(x, 32);<br><br>// also works<br>b = b.storeUint(32);",
+          }}
+        ></code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code
+          dangerouslySetInnerHTML={{
+            __html: "b = b.store_int(x, 32)<br>     .store_int(y, 32);",
+          }}
+        ></code>
+      </td>
+      <td>
+        <code
+          dangerouslySetInnerHTML={{
+            __html: "b.storeInt(x, 32)<br> .storeInt(y, 32);<br><br>// b = ...; also works",
+          }}
+        ></code>
+      </td>
+    </tr>
+  </tbody>
 </table>
 
 Tolk offers a mutability conception to make this available, a generalization of what a `~` tilda means in FunC.
